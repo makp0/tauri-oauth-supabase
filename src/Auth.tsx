@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import { shell } from "@tauri-apps/api";
+import { openUrl } from '@tauri-apps/plugin-opener';
 
 function getLocalHostUrl(port: number) {
   return `http://localhost:${port}`;
@@ -79,7 +79,7 @@ export default function Auth() {
     });
 
     if (data.url) {
-      shell.open(data.url);
+      await openUrl(data.url);
     } else {
       alert(error?.message);
     }
